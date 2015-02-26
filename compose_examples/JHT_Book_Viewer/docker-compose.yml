@@ -1,0 +1,38 @@
+ngData:
+  image: normalised/data-container:latest
+  volumes:
+    - ./:/data
+  privileged: true
+
+ngToolkit:
+  image: normalised/npm-grunt-bower-compass:latest
+  volumes:
+    # Use our own ssh key here for github
+    - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+  volumes_from: 
+    - ngData
+  privileged: true
+  working_dir: "/data"  
+
+seleniumChrome:
+  image: selenium/standalone-chrome:2.44.0
+  expose:
+    - "4444"
+
+ngTestkit:
+  image: normalised/ngtestkit:latest
+  links:
+    - seleniumChrome
+  volumes_from:
+    - ngData
+  privileged: true
+  working_dir: "/data"
+
+ngWeb:
+  image: dockerfile/nginx
+  ports:
+    - "9000:80"
+  volumes:
+    - ./:/var/www/html
+    - ./config/dev.nginx.conf:/etc/nginx/sites-available/default
+  privileged: true
