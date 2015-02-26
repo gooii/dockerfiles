@@ -13,3 +13,5 @@ If you do use it, then to run npm/grunt/bower you have to do something like this
 docker-compose run --entrypoint="/usr/local/bin/grunt" ngToolkit local
 
 etc..
+
+Also, ngTestkit hasn't itself been tested at all. Don't know if it works, pretty sure the selenium link will need something doing to it.
