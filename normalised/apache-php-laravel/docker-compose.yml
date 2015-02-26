@@ -1,0 +1,23 @@
+data:
+  image: normalised/data-container:latest
+  volumes:
+    - ./host:/app
+  privileged: true
+
+web:
+  image: normalised/apache-php
+  volumes_from:
+    - data
+  ports:
+    - "9000:80"
+  privileged: true
+
+composer:
+  image: dylanlindgren/docker-laravel-composer
+  volumes:
+    - ./host:/data/www
+
+artisan:
+  image: dylanlindgren/docker-laravel-artisan
+  volumes:
+    - ./host:/data/www
