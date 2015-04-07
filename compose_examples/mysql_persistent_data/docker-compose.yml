@@ -1,0 +1,19 @@
+dbdata:
+  image: normalised/data-container
+  volumes:
+    # Will create a mysql_data directory to store mysql files in
+    - ./mysql_data:/var/lib/mysql
+
+db:
+  image: mysql
+  volumes_from:
+    - dbdata
+  ports:
+    # Exposes port 8000 on localhost
+    - "8000:3306"
+  environment:
+    MYSQL_DATABASE: "database_to_create"
+    MYSQL_USER: "username"
+    MYSQL_PASSWORD: "userpassword"
+    # Root password has to be set for the first run
+    MYSQL_ROOT_PASSWORD: "rootpassword"
